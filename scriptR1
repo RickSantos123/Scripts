@@ -1,0 +1,46 @@
+enable
+configure terminal
+hostname RT-01
+enable secret SenhadaEnable
+banner motd "ACESSO APENAS PARA PESSOAS AUTORIZADAS"
+line console 0
+password SenhadaConsole
+login
+exit
+line vty 0 15
+password SenhadaVTY
+transport input ssh
+exec-timeout 10
+login
+exit
+username rickrezende privilege 15 secret arroz
+username estagiario privilege 1 secret senha
+login block-for 60 attempts 3 within 60
+security password min-length 8
+service password-encryption
+interface gigabitethernet 0/0
+ip address 192.168.0.1 255.255.224.0
+no shutdown
+exit
+interface serial 0/0/1
+ip address 201.187.89.5 255.255.255.252
+no shutdown
+exit
+interface serial 0/1/1
+ip address 201.187.89.21 255.255.255.252
+no shutdown
+exit
+interface serial 0/0/0
+ip address 201.187.89.1 255.255.255.252
+no shutdown
+exit
+ip route 201.187.89.8 255.255.255.252 201.187.89.6
+ip route 201.187.89.8 255.255.255.252 201.187.89.2
+ip route 201.187.89.8 255.255.255.252 201.187.89.22
+ip route 201.187.89.12 255.255.255.252 201.187.89.2
+ip route 201.187.89.12 255.255.255.252 201.187.89.6
+ip route 201.187.89.12 255.255.255.252 201.187.89.22
+ip route 201.187.89.16 255.255.255.252 201.187.89.2
+ip route 201.187.89.16 255.255.255.252 201.187.89.6
+ip route 201.187.89.16 255.255.255.252 201.187.89.22
+do wr
